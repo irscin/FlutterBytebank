@@ -7,7 +7,7 @@ class BytebankApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: FormularioTransferencia(),
+        body: ListaTransferencias(),
       ),
     );
   }
@@ -30,13 +30,13 @@ class FormularioTransferencia extends StatelessWidget {
             Editor(controlador: _controladorCampoValor, rotulo: "Valor", dica: "00.00", icone: Icons.monetization_on),
             RaisedButton(
               child: Text('Confirmar'),
-              onPressed: () => _criaTransferencia(),
+              onPressed: () => _criaTransferencia(context),
             )
           ],
         ));
   }
 
-  void _criaTransferencia() {
+  void _criaTransferencia(BuildContext context) {
      final int numeroConta =
         int.tryParse(_controladorCampoNumeroConta.text);
     final double valor =
@@ -44,6 +44,7 @@ class FormularioTransferencia extends StatelessWidget {
     if (numeroConta != null && valor != null) {
       final transferenciaCriada = Transferencia(valor, numeroConta);
       debugPrint('$transferenciaCriada');
+      Navigator.pop(context, transferenciaCriada);
     }
   }
 }
@@ -76,22 +77,44 @@ class Editor extends StatelessWidget {
 }
 
 
-class ListaTransferencias extends StatelessWidget {
+class ListaTransferencias extends StatefulWidget {
+  final List<Transferencia> _transferencias=List();
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return ListaTransferenciasState();
+  }
+}
+
+//State vai ser executado sempre que o Stateful Widget que o usa for interagido
+class ListaTransferenciasState extends State<ListaTransferencias>{
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Transferências'),
       ),
-      body: Column(
-        children: <Widget>[
-          ItemTransferencia(Transferencia(100.0, 1000)),
-          ItemTransferencia(Transferencia(200.0, 2000)),
-          ItemTransferencia(Transferencia(300.0, 3000)),
-        ],
+      //ListViewBuilder é necessário para situações diânmicas. ListView comum para situações estáticas.
+      body: ListView.builder(
+          itemCount: widget._transferencias.length,
+          itemBuilder: (context, indice){
+            return ItemTransferencia(widget._transferencias[indice]);
+          }
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(Icons.add), onPressed: (){
+        //MaterialPageRoute cria a rota para troca de tela já com todos os artefatos aderentes ao material design
+        //Criar um future é útil para receber valores de volta uma vez que tivermos terminado com a tela
+        final Future<Transferencia> future = Navigator.push(context, MaterialPageRoute(builder: (context){
+          return FormularioTransferencia();
+        }));
+        future.then((transferenciaRecebida){
+          debugPrint('$transferenciaRecebida');
+          widget._transferencias.add(transferenciaRecebida);
+        });
+      },
       ),
     );
   }
