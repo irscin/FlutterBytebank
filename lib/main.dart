@@ -53,7 +53,6 @@ class FormularioTransferenciaState extends State<FormularioTransferencia>{
     double.tryParse(_controladorCampoValor.text);
     if (numeroConta != null && valor != null) {
       final transferenciaCriada = Transferencia(valor, numeroConta);
-      debugPrint('$transferenciaCriada');
       Navigator.pop(context, transferenciaCriada);
     }
   }
@@ -121,10 +120,12 @@ class ListaTransferenciasState extends State<ListaTransferencias>{
           return FormularioTransferencia();
         }));
         future.then((transferenciaRecebida){
-          debugPrint('$transferenciaRecebida');
           //Verificação feita para o caso do usuário clicar em voltar sem preencher a transferência
           if(transferenciaRecebida != null){
-            widget._transferencias.add(transferenciaRecebida);
+            setState(() {
+              widget._transferencias.add(transferenciaRecebida);
+            });
+
           }
 
         });
