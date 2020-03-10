@@ -24,15 +24,17 @@ class FormularioTransferencia extends StatelessWidget {
         appBar: AppBar(
           title: Text('Criando Transferência'),
         ),
-        body: Column(
-          children: <Widget>[
-            Editor(controlador: _controladorCampoNumeroConta, rotulo: "Número da Conta", dica: "0000"),
-            Editor(controlador: _controladorCampoValor, rotulo: "Valor", dica: "00.00", icone: Icons.monetization_on),
-            RaisedButton(
-              child: Text('Confirmar'),
-              onPressed: () => _criaTransferencia(context),
-            )
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Editor(controlador: _controladorCampoNumeroConta, rotulo: "Número da Conta", dica: "0000"),
+              Editor(controlador: _controladorCampoValor, rotulo: "Valor", dica: "00.00", icone: Icons.monetization_on),
+              RaisedButton(
+                child: Text('Confirmar'),
+                onPressed: () => _criaTransferencia(context),
+              )
+            ],
+          )
         ));
   }
 
