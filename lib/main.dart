@@ -112,7 +112,11 @@ class ListaTransferenciasState extends State<ListaTransferencias>{
         }));
         future.then((transferenciaRecebida){
           debugPrint('$transferenciaRecebida');
-          widget._transferencias.add(transferenciaRecebida);
+          //Verificação feita para o caso do usuário clicar em voltar sem preencher a transferência
+          if(transferenciaRecebida != null){
+            widget._transferencias.add(transferenciaRecebida);
+          }
+
         });
       },
       ),
