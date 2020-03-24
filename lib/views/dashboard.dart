@@ -16,28 +16,30 @@ class dashboard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(14.0),
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>contacts_list()));
-                  },
-                  child: Container(
-                      height: 100,
-                      width: 150,
-                      color: Colors.green,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Icon(Icons.people),
-                            Text('Contatos',
-                                style: TextStyle(
-                                    fontSize: 24.0
-                                ))
-                          ],
-                        ),
-                      )
+                child: Material(
+                  color: Colors.green,
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>contacts_list()));
+                    },
+                    child: Container(
+                        height: 100,
+                        width: 150,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Icon(Icons.people),
+                              Text('Contatos',
+                                  style: TextStyle(
+                                      fontSize: 24.0
+                                  ))
+                            ],
+                          ),
+                        )
+                    ),
                   ),
                 ),
               )

@@ -2,6 +2,8 @@ import 'package:bytebank/views/contacts_list.dart';
 import 'package:bytebank/views/dashboard.dart';
 import 'package:flutter/material.dart';
 
+import 'views/form_editor.dart';
+
 void main() => runApp(ByteBank());
 
 class ByteBank extends StatelessWidget {
